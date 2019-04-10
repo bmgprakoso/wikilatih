@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">WikiLatih</a>
+    <a class="navbar-brand" href="">WikiLatih</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,9 +7,9 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         {% set navigation_bar = [
-                (url_for('index'), 'index', 'Home'),
-                (url_for('trainings'), 'trainings', 'Trainings'),
-                (url_for('profile'), 'profile', 'Profile')
+                (url_for('index'), 'index', 'Beranda'),
+                (url_for('trainings'), 'trainings', 'Pelatihan'),
+                (url_for('profile'), 'profile', 'Profil')
         ] -%}
 
         {% set active_page = active_page|default('index') -%}
@@ -29,7 +29,7 @@
         <ul class="navbar-nav">
             <li {% if 'login' == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
                 <a class="nav-link" href="{{ url_for('login') }}">
-                    Login
+                    Masuk
                     {% if 'login' == active_page %}
                         <span class="sr-only">(current)</span>
                     {% endif %}
@@ -37,7 +37,7 @@
             </li>
         </ul>
         <form action="{{ url_for('register') }}">
-            <button class="btn btn-outline-secondary my-2 my-sm-0">Register</button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Daftar</button>
         </form>
     </div>
 </nav>
