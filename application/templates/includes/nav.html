@@ -9,9 +9,9 @@
         {% set navigation_bar = [
                 (url_for('index'), 'index', 'Home'),
                 (url_for('trainings'), 'trainings', 'Trainings'),
-                (url_for('profile'), 'profile', 'Profile'),
-                (url_for('login'), 'login', 'Login')
-            ] -%}
+                (url_for('profile'), 'profile', 'Profile')
+        ] -%}
+
         {% set active_page = active_page|default('index') -%}
         <ul class="navbar-nav mr-auto">
             {% for href, id, caption in navigation_bar %}
@@ -26,21 +26,18 @@
             {% endfor %}
         </ul>
 
-        {#        <ul class="navbar-nav mr-auto">#}
-        {##}
-        {##}
-        {#            <li class="nav-item active">#}
-        {#                <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>#}
-        {#            </li>#}
-        {#            <li class="nav-item">#}
-        {#                <a class="nav-link" href="{{ url_for('trainings') }}">Training</a>#}
-        {#            </li>#}
-        {#            <li class="nav-item">#}
-        {#                <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>#}
-        {#            </li>#}
-        {#            <li class="nav-item">#}
-        {#                <a class="nav-link" href="{{ url_for('login') }}">Login</a>#}
-        {#            </li>#}
-        {#        </ul>#}
+        <ul class="navbar-nav">
+            <li {% if 'login' == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                <a class="nav-link" href="{{ url_for('login') }}">
+                    Login
+                    {% if 'login' == active_page %}
+                        <span class="sr-only">(current)</span>
+                    {% endif %}
+                </a>
+            </li>
+        </ul>
+        <form action="{{ url_for('register') }}">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Register</button>
+        </form>
     </div>
 </nav>
