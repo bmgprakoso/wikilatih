@@ -6,21 +6,41 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"/>
 {% endblock %}
 {% block content %}
-    <form class="form-signin">
+    <form name="login" class="form-signin" action="" method="post" novalidate>
         <img class="mb-4" src="https://via.placeholder.com/72" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Masuk</h1>
-        <label for="inputEmail" class="sr-only">Alamat email</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Alamat email" required="" autofocus=""
-               autocomplete="off">
-        <label for="inputPassword" class="sr-only">Kata sandi</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Kata sandi" required=""
-               autocomplete="off">
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Ingat saya
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Masuk</button>
-        <p class="mt-5 mb-3 text-muted">© 2019</p>
+        {{ form.hidden_tag() }}
+
+        {{ form.email.label(class_="sr-only") }}
+        {{ form.email(size=35, class_="form-control") }}
+        {% for error in form.email.errors %}
+            <span class="">{{ error }}</span>
+        {% endfor %}
+
+        {{ form.password.label(class_="sr-only") }}
+        {{ form.password(size=15, class_="form-control") }}
+        {% for error in form.email.errors %}
+            <span class="">{{ error }}</span>
+        {% endfor %}
+
+        {{ form.submit(class_="btn btn-lg btn-primary btn-block mt-3") }}
     </form>
+
+    {#    <form class="form-signin">#}
+    {#        <img class="mb-4" src="https://via.placeholder.com/72" alt="" width="72" height="72">#}
+    {#        <h1 class="h3 mb-3 font-weight-normal">Masuk</h1>#}
+    {#        <label for="inputEmail" class="sr-only">Alamat email</label>#}
+    {#        <input type="email" id="inputEmail" class="form-control" placeholder="Alamat email" required="" autofocus=""#}
+    {#               autocomplete="off">#}
+    {#        <label for="inputPassword" class="sr-only">Kata sandi</label>#}
+    {#        <input type="password" id="inputPassword" class="form-control" placeholder="Kata sandi" required=""#}
+    {#               autocomplete="off">#}
+    {#        <div class="checkbox mb-3">#}
+    {#            <label>#}
+    {#                <input type="checkbox" value="remember-me"> Ingat saya#}
+    {#            </label>#}
+    {#        </div>#}
+    {#        <button class="btn btn-lg btn-primary btn-block" type="submit">Masuk</button>#}
+    {#        <p class="mt-5 mb-3 text-muted">© 2019</p>#}
+    {#    </form>#}
 {% endblock %}

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="">WikiLatih</a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">WikiLatih</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,8 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         {% set navigation_bar = [
                 (url_for('index'), 'index', 'Beranda'),
-                (url_for('trainings'), 'trainings', 'Pelatihan'),
-                (url_for('profile'), 'profile', 'Profil')
+                (url_for('account'), 'account', 'Pelatihan Saya')
         ] -%}
 
         {% set active_page = active_page|default('index') -%}
@@ -26,18 +25,25 @@
             {% endfor %}
         </ul>
 
-        <ul class="navbar-nav">
-            <li {% if 'login' == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
-                <a class="nav-link" href="{{ url_for('login') }}">
-                    Masuk
-                    {% if 'login' == active_page %}
-                        <span class="sr-only">(current)</span>
-                    {% endif %}
-                </a>
-            </li>
-        </ul>
-        <form action="{{ url_for('register') }}">
-            <button class="btn btn-outline-secondary my-2 my-sm-0">Daftar</button>
-        </form>
+        {% if logged_name %}
+            <form action="{{ url_for('logout') }}">
+                <button class="btn btn-outline-secondary my-2 my-sm-0">{{ logged_name }}</button>
+            </form>
+        {% else %}
+            <ul class="navbar-nav">
+                <li {% if 'login' == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                    <a class="nav-link" href="{{ url_for('login') }}">
+                        Masuk
+                        {% if 'login' == active_page %}
+                            <span class="sr-only">(current)</span>
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+            <form action="{{ url_for('register') }}">
+                <button class="btn btn-outline-secondary my-2 my-sm-0">Daftar</button>
+            </form>
+        {% endif %}
+
     </div>
 </nav>
