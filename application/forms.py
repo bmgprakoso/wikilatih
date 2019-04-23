@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from flask_ckeditor import CKEditorField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from application.models import User
 
@@ -28,3 +29,15 @@ class RegisterForm(FlaskForm):
         user = User.objects(email=email.data).first()
         if user:
             raise ValidationError('Alamat email sudah digunakan. Silakan gunakan alamat lain')
+
+
+class TestForm(FlaskForm):
+    answer = CKEditorField('Jawaban', validators=[DataRequired()])
+    submit = SubmitField('Kirim')
+
+
+class EvaluationForm(FlaskForm):
+    criticism = TextAreaField("Kritik", validators=[DataRequired()])
+    suggestions = TextAreaField("Saran", validators=[DataRequired()])
+    submit = SubmitField("Kirim")
+

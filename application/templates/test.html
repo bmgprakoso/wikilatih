@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block title %}Test{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="mt-3 card bg-light">
+            <article class="card-body">
+                <h4 class="card-title mt-3 text-center">Uji Kompetensi - [Nama Pelatihan]</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt ornare urna vel tristique.
+                    Suspendisse consectetur molestie augue, efficitur tempor diam maximus eu. Maecenas et cursus mi. Sed
+                    vitae fermentum leo, vel interdum lacus. Praesent quis mollis arcu, ac rutrum lorem. Proin maximus
+                    lectus non interdum sollicitudin. Aenean sed erat ac odio bibendum porta quis et dui. Donec non
+                    pretium sapien. Proin consectetur sem venenatis, interdum enim at, sollicitudin lorem. Donec tempus
+                    varius augue, non tempus massa pulvinar nec. Maecenas posuere nibh non ante sagittis, quis sodales
+                    elit malesuada. Ut vel eros scelerisque nunc elementum tincidunt. Cras convallis venenatis mauris eu
+                    placerat. Nulla nibh risus, lobortis ut lobortis sit amet, ornare vel mauris. Pellentesque habitant
+                    morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+
+                <form name="test" action="" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+                    {{ form.answer() }}
+                    {% for error in form.answer.errors %}
+                        <span class="">{{ error }}</span>
+                    {% endfor %}
+                    {{ form.submit(class_="btn btn-success btn-block") }}
+                </form>
+                {{ ckeditor.load() }}
+                {{ ckeditor.config(name='answer') }}
+            </article>
+        </div>
+    </div>
+{% endblock %}

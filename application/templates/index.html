@@ -17,7 +17,6 @@
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top"
-                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
                              alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;"
                              src="{{ image_url }}"
                              data-holder-rendered="true">
@@ -28,7 +27,7 @@
                                     <h6>OCT</h6>
                                 </div>
                                 <div class="col-9">
-                                    <a href="{{ url_for('login') }}"><h5 class="card-title">{{ training.title }}</h5>
+                                    <a href="{{ url_for('trainings', training_id=training.course_id) }}"><h5 class="card-title">{{ training.title }}</h5>
                                     </a>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ training.location }}</h6>
                                 </div>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block title %}Training Detail{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="mt-4">Hae maniez</h1>
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <h4>Deskripsi</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
+                                    dicta
+                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
+                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Waktu</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
+                                    dicta
+                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
+                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                <h4>Tempat</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
+                                    dicta
+                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
+                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-success" href="{{ url_for('test', training_id=1) }}">
+                                    <i class="fa fa-plus"></i> Daftar
+                                </a>
+                                <a class="btn btn-primary" href="{{ url_for('test', training_id=1) }}">
+                                    <i class="fa fa-book-reader"></i> Uji Kemampuan
+                                </a>
+                                <a class="btn btn-secondary" href="{{ url_for('evaluation', training_id=1) }}">
+                                    <i class="fa fa-comment-dots"></i> Beri Ulasan
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Materi Pelatihan
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore,
+                            similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat
+                            laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore,
+                            similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat
+                            laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore,
+                            similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat
+                            laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <a href="#" class="btn btn-success">Leave a Review</a>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+    </div>
+
+{% endblock %}

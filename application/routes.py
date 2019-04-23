@@ -1,7 +1,7 @@
 from application import app
 from application.models import User, Training
 from flask import render_template, redirect, flash, session
-from application.forms import LoginForm, RegisterForm
+from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm
 
 
 @app.route('/')
@@ -10,8 +10,8 @@ def index():
     if session.get('user_id'):
         logged_name = session.get('name')
 
-    trainings = Training.objects.all()
-    return render_template('index.html', trainings=trainings, logged_name=logged_name)
+    t = Training.objects.all()
+    return render_template('index.html', trainings=t, logged_name=logged_name)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -75,3 +75,42 @@ def account():
         logged_in = True
 
     return render_template('account.html', logged_in=logged_in)
+
+
+@app.route('/trainings/<training_id>')
+def trainings(training_id):
+    logged_in = False
+    if session.get('user_id'):
+        logged_in = True
+
+    return render_template('training-detail.html', logged_in=logged_in)
+
+
+@app.route('/trainings/<training_id>/test', methods=['GET', 'POST'])
+def test(training_id):
+    # if not session.get('user_id'):
+    #     return redirect('/')
+
+    t = Training.objects.all()
+
+    form = TestForm()
+    if form.validate_on_submit():
+        flash('Jawaban berhasil disimpan', 'success')
+        return redirect('/')
+
+    return render_template('test.html', training=t, form=form)
+
+
+@app.route('/trainings/<training_id>/evaluation', methods=['GET', 'POST'])
+def evaluation(training_id):
+    # if not session.get('user_id'):
+    #     return redirect('/')
+
+    t = Training.objects.all()
+
+    form = EvaluationForm()
+    if form.validate_on_submit():
+        flash('Terima kasih atas ulasanmu', 'success')
+        return redirect('/')
+
+    return render_template('evaluation.html', training=t, form=form)
