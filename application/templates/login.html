@@ -7,18 +7,16 @@
 {% endblock %}
 {% block content %}
     <form name="login" class="form-signin" action="" method="post" novalidate>
-        <img class="mb-4" src="https://via.placeholder.com/72" alt="" width="72" height="72">
+        <img class="mb-4" src="{{ url_for('static', filename='images/wikilatih-logo.png') }}" alt="" height="200">
         <h1 class="h3 mb-3 font-weight-normal">Masuk</h1>
         {{ form.hidden_tag() }}
 
-        {{ form.email.label(class_="sr-only") }}
-        {{ form.email(size=35, class_="form-control") }}
+        {{ form.email(size=35, class_="form-control mb-1", placeholder="Alamat email") }}
         {% for error in form.email.errors %}
             <span class="">{{ error }}</span>
         {% endfor %}
 
-        {{ form.password.label(class_="sr-only") }}
-        {{ form.password(size=15, class_="form-control") }}
+        {{ form.password(size=15, class_="form-control", placeholder="Kata sandi") }}
         {% for error in form.email.errors %}
             <span class="">{{ error }}</span>
         {% endfor %}

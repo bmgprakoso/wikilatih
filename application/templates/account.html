@@ -2,5 +2,106 @@
 {% set active_page = "account" %}
 {% block title %}Account{% endblock %}
 {% block content %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <img class="mx-auto d-block rounded-circle" src="http://loremflickr.com/100/100/people">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mx-auto text-center">
+                                    <h5>Name</h5>
+                                    <h6>Email</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab"
+                           aria-controls="active" aria-selected="true">Aktif</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="done-tab" data-toggle="tab" href="#done" role="tab"
+                           aria-controls="done" aria-selected="false">Selesai</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                        <div class="card">
+                            <img class="card-img-top img-fluid" src="http://placehold.it/900x200" alt="">
+                            <div class="card-body">
+                                <div class="row mb-4">
+                                    <div class="col-2 text-center">
+                                        <h1 class=""><span class="badge badge-secondary">23</span></h1>
+                                        <h4>OCT</h4>
+                                    </div>
+                                    <div class="col-10">
+                                        <h4>Deskripsi</h4>
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                            Sapiente
+                                            dicta
+                                            fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint
+                                            aperiam sequi
+                                            pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-primary" href="{{ url_for('test', training_id=1) }}">
+                                            <i class="fa fa-book-reader"></i> Uji Kemampuan
+                                        </a>
+                                        <a class="btn btn-secondary" href="{{ url_for('evaluation', training_id=1) }}">
+                                            <i class="fa fa-comment-dots"></i> Beri Ulasan
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
+                        <div class="card">
+                            <img class="card-img-top img-fluid" src="http://placehold.it/900x200" alt="">
+                            <div class="card-body">
+                                <div class="row mb-4">
+                                    <div class="col-2 text-center">
+                                        <h1 class=""><span class="badge badge-secondary">23</span></h1>
+                                        <h4>OCT</h4>
+                                    </div>
+                                    <div class="col-10">
+                                        <h4>Deskripsi</h4>
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                            Sapiente
+                                            dicta
+                                            fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint
+                                            aperiam sequi
+                                            pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-primary" href="{{ url_for('test', training_id=1) }}">
+                                            <i class="fa fa-book-reader"></i> Uji Kemampuan
+                                        </a>
+                                        <a class="btn btn-secondary" href="{{ url_for('evaluation', training_id=1) }}">
+                                            <i class="fa fa-comment-dots"></i> Beri Ulasan
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
 {% endblock %}
