@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from flask_ckeditor import CKEditorField
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField, RadioField, \
+    SelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
+from wtforms.widgets import ListWidget, CheckboxInput
 from application.models import User
 
 
@@ -20,7 +21,8 @@ class RegisterForm(FlaskForm):
                                      validators=[DataRequired(), Length(min=6, max=15), EqualTo('password')])
     phone = StringField("Nomor Telepon", validators=[DataRequired(), Length(min=2, max=15)])
     job = SelectField('Pekerjaan', validators=[DataRequired()],
-                      choices=[('', 'Pekerjaan'), ('Pegawai Negeri Sipil', 'Pegawai Negeri Sipil'), ('Pegawai Swasta', 'Pegawai Swasta'),
+                      choices=[('', 'Pekerjaan'), ('Pegawai Negeri Sipil', 'Pegawai Negeri Sipil'),
+                               ('Pegawai Swasta', 'Pegawai Swasta'),
                                ('Wirausaha', 'Wirausaha'), ('Pelajar', 'Pelajar'), ('Lain-lain', 'Lain-lain')])
     city = StringField('Kota', validators=[DataRequired()])
     submit = SubmitField("Daftar")
@@ -32,12 +34,45 @@ class RegisterForm(FlaskForm):
 
 
 class TestForm(FlaskForm):
-    answer = CKEditorField('Jawaban', validators=[DataRequired()])
+    question1 = RadioField('Question 1',
+                           choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
+                           validators=[DataRequired()])
+    question2 = RadioField('Question 2',
+                           choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
+                           validators=[DataRequired()])
+    question3 = RadioField('Question 3',
+                           choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
+                           validators=[DataRequired()])
+    question4 = RadioField('Question 4',
+                           choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
+                           validators=[DataRequired()])
+    question5 = RadioField('Question 5',
+                           choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
+                           validators=[DataRequired()])
     submit = SubmitField('Kirim')
 
 
-class EvaluationForm(FlaskForm):
-    criticism = TextAreaField("Kritik", validators=[DataRequired()])
-    suggestions = TextAreaField("Saran", validators=[DataRequired()])
-    submit = SubmitField("Kirim")
+class MultiCheckboxField(SelectMultipleField):
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
 
+
+class EvaluationForm(FlaskForm):
+    opinion = TextAreaField('Apa pendapat Anda terkait pelatihan yang telah diikuti?*', validators=[DataRequired()])
+    is_trainer_good = RadioField('Apakah pelatih memberikan penjelasan dengan baik dan mudah dimengerti?*',
+                                 choices=[(True, 'Ya'), (False, 'Tidak')],
+                                 validators=[DataRequired()])
+    interested_wikimedia_project = MultiCheckboxField(
+        'Selain Wikipedia, proyek Wikimedia mana saja yang tertarik untuk Anda ikuti?*',
+        validators=[DataRequired()],
+        choices=[('wiktionary', 'Wiktionary (kamus)'), ('wikisource', 'Wikisource (sumber naskah, buku)'),
+                 ('wikiquote', 'Wikiquote (kutipan)'), ('wikibooks', 'Wikibooks (buku)'),
+                 ('wikinews', 'Wikinews (berita)'), ('wikiversity', 'Wikiversity (bahan pelajaran)'),
+                 ('wikispecies', 'Wikispecies (taksonomi)'), ('mediawiki', 'MediaWiki (piranti lunak)'),
+                 ('wikidata', 'Wikidata (basis data)'),
+                 ('wikimedia_commons', 'Wikimedia Commons (gudang berkas: foto, video, musik)'),
+                 ('wikivoyage', 'Wikivoyage (panduan wisata)')])
+    criticism_suggestion = TextAreaField('Kritik dan saran*', validators=[DataRequired()])
+    want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya bila ada',
+                             validators=[DataRequired()])
+    submit = SubmitField("Kirim")

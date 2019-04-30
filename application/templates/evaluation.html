@@ -7,29 +7,44 @@
             <article class="card-body">
                 <h4 class="card-title mt-3 text-center">Ulasan - [Nama Pelatihan]</h4>
                 <form name="evaluation" action="" method="post" novalidate>
-                    {{ form.hidden_tag() }}
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label>Kritik</label>
-                            {{ form.criticism(class_='form-control', rows='10') }}
-                            {% for error in form.criticism.errors %}
-                                <span class="">{{ error }}</span>
-                            {% endfor %}
+                    {% for field in form %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                {% if field.type == 'BooleanField' %}
+                                    <div class="form-check">
+                                        {{ field(class_='form-check-input') }}
+                                        {{ field.label(class_='form-check-label') }}                                    </div>
+                                {% elif field.type == 'CSRFTokenField' %}
+                                    {{ field }}
+                                {% elif field.type == 'MultiCheckboxField' %}
+                                    <label>{{ field.label }}</label>
+                                    {% for subfield in field %}
+                                        <div class="form-check">
+                                            {{ subfield(class_='form-check-input') }}
+                                            {{ subfield.label(class_='form-check-label') }}
+                                        </div>
+                                    {% endfor %}
+                                {% elif field.type == 'RadioField' %}
+                                    <label>{{ field.label }}</label>
+                                    {% for subfield in field %}
+                                        <div class="form-check">
+                                            {{ subfield(class_='form-check-input') }}
+                                            {{ subfield.label(class_='form-check-label') }}
+                                        </div>
+                                    {% endfor %}
+                                {% elif field.type == 'SubmitField' %}
+                                    {{ field(class_="btn btn-success btn-block") }}
+                                {% elif field.type == 'TextAreaField' %}
+                                    <label>{{ field.label }}</label>
+                                    {{ field(class_='form-control') }}
+                                    {% for error in field.errors %}
+                                        <span class="">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="inputEmail4">Saran</label>
-                            {{ form.suggestions(class_='form-control', rows='10') }}
-                            {% for error in form.suggestions.errors %}
-                                <span class="">{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {{ form.submit(class_="btn btn-success btn-block") }}
+                    {% endfor %}
                 </form>
-                {{ ckeditor.load() }}
-                {{ ckeditor.config(name='answer') }}
             </article>
         </div>
     </div>
