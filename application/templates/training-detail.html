@@ -1,33 +1,25 @@
 {% extends "base.html" %}
 {% set active_page = "index" %}
+{% set training = context['training'] %}
 {% block title %}Training Detail{% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="mt-4">Hae maniez</h1>
+                <h1 class="mt-4">{{ training.title }}</h1>
                 <div class="card">
                     <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-md-8">
                                 <h4>Deskripsi</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-                                    dicta
-                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
-                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                <p class="card-text">{{ training.description }}</p>
                             </div>
                             <div class="col-md-4">
                                 <h4>Waktu</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-                                    dicta
-                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
-                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                <p class="card-text">{{ training.datetime.strftime('%c') }}</p>
                                 <h4>Tempat</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-                                    dicta
-                                    fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi
-                                    pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                                <p class="card-text">{{ training.location }}</p>
                             </div>
                         </div>
                         <div class="row">

@@ -12,7 +12,7 @@
     </section>
     <div class="container">
         <div class="row">
-            {% for training in trainings %}
+            {% for training in context['trainings'] %}
                 {% set image_url = 'https://picsum.photos/500/225?image=' + range(1, 100) | random | string %}
                 {% set day_of_month = training.datetime.strftime('%d') %}
                 {% set month_short = training.datetime.strftime('%b') %}
@@ -30,15 +30,11 @@
                                     <h6>{{ month_short.upper() }}</h6>
                                 </div>
                                 <div class="col-9">
-                                    <a href="{{ url_for('trainings', training_id=training.training_id) }}"><h5
+                                    <a href="{{ url_for('training_detail', training_id=training.training_id) }}"><h5
                                             class="card-title">{{ training.title }}</h5>
                                     </a>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{ training.location }}</h6>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <p class="card-text">{{ training.description }}</p>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ training.datetime.strftime('%c') }}</h6>
+                                    <h6 class="card-subtitle mb-2">{{ training.location }}</h6>
                                 </div>
                             </div>
                         </div>

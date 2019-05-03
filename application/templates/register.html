@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% set active_page = "register" %}
+{% set form = context['form'] %}
 {% block title %}Register{% endblock %}
 {% block content %}
     <div class="container">
@@ -7,7 +8,6 @@
             <article class="card-body mx-auto">
                 <h4 class="card-title mt-3 text-center">Buat Akun</h4>
                 <p class="text-center">Mulai latihanmu dengan akun gratis WikiLatih</p>
-
                 <form name="register" action="" method="post" novalidate>
                     {{ form.hidden_tag() }}
                     <div class="form-group input-group">
@@ -90,7 +90,7 @@
                         {{ form.submit(class_="btn btn-lg btn-primary btn-block") }}
                         {#<button type="submit" class="btn btn-primary btn-block"> Buat Akun</button>#}
                     </div>
-                    <p class="text-center">Sudah punya akun? <a href="">Masuk di sini</a></p>
+                    <p class="text-center">Sudah punya akun? <a href="{{ url_for('login') }}">Masuk di sini</a></p>
                 </form>
             </article>
         </div>

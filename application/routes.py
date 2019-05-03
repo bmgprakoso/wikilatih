@@ -18,7 +18,8 @@ def get_context():
 def index():
     context = get_context()
     t = Training.objects.all()
-    return render_template('index.html', trainings=t, context=context)
+    context['trainings'] = t
+    return render_template('index.html', context=context)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -28,6 +29,7 @@ def login():
         return redirect('/')
 
     form = LoginForm()
+    context['form'] = form
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
@@ -41,7 +43,7 @@ def login():
             return redirect('/')
         else:
             flash('Mohon maaf, sedang ada gangguan sistem. Silakan kembali beberapa saat lagi', 'danger')
-    return render_template('login.html', form=form, context=context)
+    return render_template('login.html', context=context)
 
 
 @app.route('/logout')
@@ -59,6 +61,7 @@ def register():
         return redirect('/')
 
     form = RegisterForm()
+    context['form'] = form
     if form.validate_on_submit():
         user_id = User.objects.count()
         user_id += 1
@@ -76,7 +79,7 @@ def register():
         flash('Kamu berhasil terdaftar', 'success')
         return redirect('/')
 
-    return render_template('register.html', form=form, context=context)
+    return render_template('register.html', context=context)
 
 
 @app.route('/account')
@@ -89,10 +92,10 @@ def account():
 
 
 @app.route('/trainings/<training_id>')
-def trainings(training_id):
+def training_detail(training_id):
     context = get_context()
-    if not context['logged_in']:
-        return redirect('/')
+    training = Training.objects.get(training_id=training_id)
+    context['training'] = training
 
     return render_template('training-detail.html', context=context)
 
