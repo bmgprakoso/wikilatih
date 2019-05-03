@@ -19,11 +19,11 @@ class User(db.Document):
 
 
 class Training(db.Document):
-    course_id = db.IntField(unique=True)
+    training_id = db.IntField(unique=True)
     title = db.StringField(max_length=100)
     description = db.StringField(max_length=255)
     location = db.StringField(max_length=255)
-    date = db.DateTimeField()
+    datetime = db.DateTimeField()
 
 
 class Enrollment(db.Document):

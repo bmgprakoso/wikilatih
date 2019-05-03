@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% set active_page = "admin_training_list" %}
+{% block title %}Trainings{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1>Pelatihan WikiLatih</h1>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <a class="btn btn-success" href="{{ url_for('admin_training_new') }}">
+                    <i class="fa fa-plus"></i> Pelatihan Baru
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" style="text-align: center;">ID</th>
+                    <th scope="col" style="text-align: center;">Title</th>
+                    <th scope="col" style="text-align: center;">Description</th>
+                    <th scope="col" style="text-align: center;">Location</th>
+                    <th scope="col" style="text-align: center;">Date</th>
+                    <th scope="col" style="text-align: center;" colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for training in trainings %}
+                    <tr>
+                        <th scope="row">{{ training.training_id }}</th>
+                        <td>{{ training.title }}</td>
+                        <td>{{ training.description }}</td>
+                        <td>{{ training.location }}</td>
+                        <td>{{ training.datetime }}</td>
+                        <td>
+                            <a class="btn btn-default"
+                               href="{{ url_for('admin_training_edit', training_id=training.training_id) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+{#                            <button type="button" class="btn btn-default" data-toggle="modal"#}
+{#                                    data-target="#delModal">#}
+{#                                <i class="fa fa-trash" style="color: #d9534f;"></i>#}
+{#                            </button>#}
+                            <a class="btn btn-default"
+                               href="{{ url_for('admin_training_delete', training_id=training.training_id) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {#    <div class="modal fade" id="delModal" tabindex="-1" role="dialog">#}
+    {#        <div class="modal-dialog" role="document">#}
+    {#            <div class="modal-content">#}
+    {#                <div class="modal-body">#}
+    {#                    <p>Apakah kamu yakin ingin menghapus pelatihan?</p>#}
+    {#                </div>#}
+    {#                <div class="modal-footer">#}
+    {#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>#}
+    {#                    <a class="btn btn-success" href="{{ url_for('admin_training_delete', training_id=training.training_id) }}">Ya</a>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+{% endblock %}

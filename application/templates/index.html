@@ -14,6 +14,9 @@
         <div class="row">
             {% for training in trainings %}
                 {% set image_url = 'https://picsum.photos/500/225?image=' + range(1, 100) | random | string %}
+                {% set day_of_month = training.datetime.strftime('%d') %}
+                {% set month_short = training.datetime.strftime('%b') %}
+                {% set time = training.datetime.strftime('%X') %}
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top"
@@ -23,8 +26,8 @@
                         <div class="card-body">
                             <div class="row justify-content-center">
                                 <div class="col-3 text-center">
-                                    <h3 class=""><span class="badge badge-secondary">23</span></h3>
-                                    <h6>OCT</h6>
+                                    <h3 class=""><span class="badge badge-secondary">{{ day_of_month }}</span></h3>
+                                    <h6>{{ month_short.upper() }}</h6>
                                 </div>
                                 <div class="col-9">
                                     <a href="{{ url_for('trainings', training_id=training.course_id) }}"><h5 class="card-title">{{ training.title }}</h5>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set active_page = "admin_training_list" %}
+{% block title %}Trainings{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="mt-3 card bg-light">
+            <article class="card-body">
+                <h4 class="card-title mt-3 text-center">Form Pelatihan</h4>
+                <form name="training" action="" method="post" novalidate>
+                    {% for field in form %}
+                        {% if field.type == 'CSRFTokenField' %}
+                            {{ field }}
+                        {% elif (field.type == 'StringField') or (field.type == 'TextAreaField') or (field.type == 'DateField') or (field.type == 'TimeField') %}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>{{ field.label }}</label>
+                                    {{ field(class_='form-control') }}
+                                    {% for error in field.errors %}
+                                        <span class="">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% elif field.type == 'SubmitField' %}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    {{ field(class_="btn btn-success btn-block") }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </form>
+            </article>
+        </div>
+    </div>
+{% endblock %}

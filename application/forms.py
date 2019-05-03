@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField, RadioField, \
     SelectMultipleField
+from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from wtforms.widgets import ListWidget, CheckboxInput
 from application.models import User
@@ -31,6 +32,15 @@ class RegisterForm(FlaskForm):
         user = User.objects(email=email.data).first()
         if user:
             raise ValidationError('Alamat email sudah digunakan. Silakan gunakan alamat lain')
+
+
+class TrainingForm(FlaskForm):
+    title = StringField('Nama Pelatihan', validators=[DataRequired(), Length(min=2, max=100)])
+    description = TextAreaField('Deskripsi', validators=[DataRequired(), Length(min=2, max=255)])
+    location = StringField('Lokasi', validators=[DataRequired(), Length(min=2, max=255)])
+    date = DateField('Tanggal Pelatihan', validators=[DataRequired()])
+    time = TimeField('Waktu Pelatihan', validators=[DataRequired()])
+    submit = SubmitField("Kirim")
 
 
 class TestForm(FlaskForm):
