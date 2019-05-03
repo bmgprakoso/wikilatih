@@ -8,3 +8,6 @@ class Config(object):
         'host': 'mongodb+srv://wikilatih:wikilatih1234@cluster0-hotgr.mongodb.net/wikilatih?retryWrites=true&ssl=true',
         'connect': False
     }
+    # MONGODB_SETTINGS = {
+    #     'db': 'wikilatih'
+    # }

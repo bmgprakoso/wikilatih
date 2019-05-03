@@ -30,7 +30,8 @@
                                     <h6>{{ month_short.upper() }}</h6>
                                 </div>
                                 <div class="col-9">
-                                    <a href="{{ url_for('trainings', training_id=training.course_id) }}"><h5 class="card-title">{{ training.title }}</h5>
+                                    <a href="{{ url_for('trainings', training_id=training.training_id) }}"><h5
+                                            class="card-title">{{ training.title }}</h5>
                                     </a>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ training.location }}</h6>
                                 </div>

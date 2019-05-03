@@ -5,19 +5,26 @@ from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm,
 import datetime
 
 
+def get_context():
+    context = dict()
+    context['logged_in'] = session.get('user_id', None)
+    context['logged_name'] = session.get('name', '')
+    context['is_admin'] = session.get('is_admin', False)
+
+    return context
+
+
 @app.route('/')
 def index():
-    logged_name = ''
-    if session.get('user_id'):
-        logged_name = session.get('name')
-
+    context = get_context()
     t = Training.objects.all()
-    return render_template('index.html', trainings=t, logged_name=logged_name)
+    return render_template('index.html', trainings=t, context=context)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if session.get('user_id'):
+    context = get_context()
+    if context['logged_in']:
         return redirect('/')
 
     form = LoginForm()
@@ -30,22 +37,25 @@ def login():
             flash(f'{user.name}, kamu berhasil masuk', 'success')
             session['user_id'] = user.user_id
             session['name'] = user.name
+            session['is_admin'] = user.is_admin
             return redirect('/')
         else:
             flash('Mohon maaf, sedang ada gangguan sistem. Silakan kembali beberapa saat lagi', 'danger')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, context=context)
 
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
     session.pop('name', None)
+    session.pop('is_admin', None)
     return redirect('/')
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if session.get('user_id'):
+    context = get_context()
+    if context['logged_in']:
         return redirect('/')
 
     form = RegisterForm()
@@ -66,31 +76,32 @@ def register():
         flash('Kamu berhasil terdaftar', 'success')
         return redirect('/')
 
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form, context=context)
 
 
 @app.route('/account')
 def account():
-    logged_in = False
-    if session.get('user_id'):
-        logged_in = True
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
-    return render_template('account.html', logged_in=logged_in)
+    return render_template('account.html', context=context)
 
 
 @app.route('/trainings/<training_id>')
 def trainings(training_id):
-    logged_in = False
-    if session.get('user_id'):
-        logged_in = True
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
-    return render_template('training-detail.html', logged_in=logged_in)
+    return render_template('training-detail.html', context=context)
 
 
 @app.route('/trainings/<training_id>/test', methods=['GET', 'POST'])
 def test(training_id):
-    # if not session.get('user_id'):
-    #     return redirect('/')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     t = Training.objects.all()
 
@@ -99,13 +110,14 @@ def test(training_id):
         flash('Jawaban berhasil disimpan', 'success')
         return redirect('/')
 
-    return render_template('test.html', training=t, form=form)
+    return render_template('test.html', training=t, form=form, context=context)
 
 
 @app.route('/trainings/<training_id>/evaluation', methods=['GET', 'POST'])
 def evaluation(training_id):
-    # if not session.get('user_id'):
-    #     return redirect('/')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     t = Training.objects.all()
 
@@ -114,24 +126,24 @@ def evaluation(training_id):
         flash('Terima kasih atas ulasanmu', 'success')
         return redirect('/')
 
-    return render_template('evaluation.html', training=t, form=form)
+    return render_template('evaluation.html', training=t, form=form, context=context)
 
 
 @app.route('/admin/trainings')
 def admin_training_list():
-    logged_name = ''
-    if session.get('user_id'):
-        logged_name = session.get('name')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     t = Training.objects.all()
-    return render_template('admin/training-list.html', trainings=t, logged_name=logged_name)
+    return render_template('admin/training-list.html', trainings=t, context=context)
 
 
 @app.route('/admin/trainings/new', methods=['GET', 'POST'])
 def admin_training_new():
-    logged_name = ''
-    if session.get('user_id'):
-        logged_name = session.get('name')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     form = TrainingForm()
     if form.validate_on_submit():
@@ -152,14 +164,14 @@ def admin_training_new():
         flash('Pelatihan berhasil terdaftar', 'success')
         return redirect('/admin/trainings')
 
-    return render_template('admin/training-form.html', logged_name=logged_name, form=form)
+    return render_template('admin/training-form.html', context=context, form=form)
 
 
 @app.route('/admin/trainings/<training_id>/edit', methods=['GET', 'POST'])
 def admin_training_edit(training_id):
-    logged_name = ''
-    if session.get('user_id'):
-        logged_name = session.get('name')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     t = Training.objects.get(training_id=training_id)
 
@@ -176,14 +188,14 @@ def admin_training_edit(training_id):
         flash('Pelatihan berhasil diubah', 'success')
         return redirect('/admin/trainings')
 
-    return render_template('admin/training-form.html', logged_name=logged_name, form=form)
+    return render_template('admin/training-form.html', context=context, form=form)
 
 
 @app.route('/admin/trainings/<training_id>/delete', methods=['GET', 'POST'])
 def admin_training_delete(training_id):
-    logged_name = ''
-    if session.get('user_id'):
-        logged_name = session.get('name')
+    context = get_context()
+    if not context['logged_in']:
+        return redirect('/')
 
     t = Training.objects.get(training_id=training_id)
     t.delete()

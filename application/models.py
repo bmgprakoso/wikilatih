@@ -10,6 +10,7 @@ class User(db.Document):
     phone = db.StringField()
     job = db.StringField()
     city = db.StringField()
+    is_admin = db.BooleanField(default=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

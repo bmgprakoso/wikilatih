@@ -11,28 +11,30 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         {% set navigation_bar = [
-                (url_for('index'), 'index', 'Beranda'),
-                (url_for('account'), 'account', 'Pelatihan Saya'),
-                (url_for('admin_training_list'), 'admin_training_list', 'Pelatihan')
+                (url_for('index'), 'index', 'Beranda', True),
+                (url_for('account'), 'account', 'Pelatihan Saya', context['logged_in'] and not context['is_admin']),
+                (url_for('admin_training_list'), 'admin_training_list', 'Pelatihan', context['is_admin'])
         ] -%}
 
         {% set active_page = active_page|default('index') -%}
         <ul class="navbar-nav mr-auto">
-            {% for href, id, caption in navigation_bar %}
-                <li {% if id == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
-                    <a class="nav-link" href="{{ href|e }}">
-                        {{ caption|e }}
-                        {% if id == active_page %}
-                            <span class="sr-only">(current)</span>
-                        {% endif %}
-                    </a>
-                </li>
+            {% for href, id, caption, toggle in navigation_bar %}
+                {% if toggle %}
+                    <li {% if id == active_page %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                        <a class="nav-link" href="{{ href|e }}">
+                            {{ caption|e }}
+                            {% if id == active_page %}
+                                <span class="sr-only">(current)</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 
-        {% if logged_name %}
+        {% if context['logged_in'] %}
             <form action="{{ url_for('logout') }}">
-                <button class="btn btn-outline-secondary my-2 my-sm-0">{{ logged_name }}</button>
+                <button class="btn btn-outline-secondary my-2 my-sm-0">{{ context['logged_name'] }}</button>
             </form>
         {% else %}
             <ul class="navbar-nav">
