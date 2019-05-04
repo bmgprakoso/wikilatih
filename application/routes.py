@@ -131,7 +131,7 @@ def training_detail(training_id):
 def training_enrollment(training_id):
     context = get_context()
     if not context['user_id']:
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
 
     training = Training.objects.get(training_id=training_id)
 

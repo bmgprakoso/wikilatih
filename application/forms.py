@@ -33,7 +33,7 @@ class RegisterForm(FlaskForm):
     def validate_email(self, email):
         user = User.objects(email=email.data).first()
         if user:
-            raise ValidationError('Alamat email sudah digunakan. Silakan gunakan alamat lain')
+            raise ValidationError('Email has already taken.')
 
 
 class TrainingForm(FlaskForm):
