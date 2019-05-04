@@ -1,5 +1,5 @@
 from application import app
-from application.models import User, Training, Enrollment
+from application.models import User, Training, Enrollment, Evaluation, InterestedProject
 from flask import render_template, redirect, flash, session, url_for
 from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm, TrainingForm
 import datetime
@@ -88,6 +88,25 @@ def account():
     if not context['user_id']:
         return redirect('/')
 
+    user = User.objects.get(user_id=context['user_id'])
+    context['user'] = user
+
+    enroll_list = Enrollment.objects.aggregate(*[
+        {
+            '$lookup': {
+                'from': 'training',
+                'localField': 'training_id',
+                'foreignField': 'training_id',
+                'as': 'training_detail'
+            }
+        }, {
+            '$match': {
+                'user_id': context['user_id']
+            }
+        }
+    ])
+    context['enroll_list'] = enroll_list
+
     return render_template('account.html', context=context)
 
 
@@ -104,7 +123,6 @@ def training_detail(training_id):
     except:
         context['enrollment'] = None
 
-    print(context)
     return render_template('training-detail.html', context=context)
 
 
@@ -148,14 +166,44 @@ def evaluation(training_id):
     if not context['user_id']:
         return redirect('/')
 
-    t = Training.objects.all()
+    training = Training.objects.get(training_id=training_id)
+    if not training:
+        return redirect('/')
+    context['training'] = training
+
+    try:
+        enrollment = Enrollment.objects.get(user_id=context['user_id'], training_id=training_id)
+    except:
+        flash(f"Ups! Kamu belum terdaftar di pelatihan {training.title}!", "danger")
+        return redirect(url_for('training_detail', training_id=training_id))
 
     form = EvaluationForm()
+    context['form'] = form
+
     if form.validate_on_submit():
+        evaluation_id = Evaluation.objects.count()
+        evaluation_id += 1
+
+        opinion = form.opinion.data
+        is_trainer_good = form.is_trainer_good.data
+        criticism_suggestion = form.criticism_suggestion.data
+        want_more = form.want_more.data
+        interested_projects = form.interested_wikimedia_project.data
+
+        Evaluation(evaluation_id=evaluation_id, opinion=opinion, is_trainer_good=is_trainer_good,
+                   criticism_suggestion=criticism_suggestion,
+                   want_more=want_more).save()
+
+        for ip in interested_projects:
+            InterestedProject(evaluation_id=evaluation_id, wikimedia_project_id=int(ip)).save()
+
+        enrollment.evaluation_id = evaluation_id
+        enrollment.save()
+
         flash('Terima kasih atas ulasanmu', 'success')
         return redirect('/')
 
-    return render_template('evaluation.html', training=t, form=form, context=context)
+    return render_template('evaluation.html', context=context)
 
 
 @app.route('/admin/trainings')

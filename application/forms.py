@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Selec
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from wtforms.widgets import ListWidget, CheckboxInput
-from application.models import User
+from application.models import User, WikimediaProject
 from city import city
 
 
@@ -70,21 +70,20 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class EvaluationForm(FlaskForm):
+    wikimedia_projects = WikimediaProject.objects.all()
+    projects = []
+    for w in wikimedia_projects:
+        projects.append((f'{w.wikimedia_project_id}', f'{w.name} ({w.description})'))
+
+    # Field
     opinion = TextAreaField('Apa pendapat Anda terkait pelatihan yang telah diikuti?*', validators=[DataRequired()])
     is_trainer_good = RadioField('Apakah pelatih memberikan penjelasan dengan baik dan mudah dimengerti?*',
-                                 choices=[(True, 'Ya'), (False, 'Tidak')],
+                                 choices=[('ya', 'Ya'), ('tidak', 'Tidak')],
                                  validators=[DataRequired()])
     interested_wikimedia_project = MultiCheckboxField(
         'Selain Wikipedia, proyek Wikimedia mana saja yang tertarik untuk Anda ikuti?*',
         validators=[DataRequired()],
-        choices=[('wiktionary', 'Wiktionary (kamus)'), ('wikisource', 'Wikisource (sumber naskah, buku)'),
-                 ('wikiquote', 'Wikiquote (kutipan)'), ('wikibooks', 'Wikibooks (buku)'),
-                 ('wikinews', 'Wikinews (berita)'), ('wikiversity', 'Wikiversity (bahan pelajaran)'),
-                 ('wikispecies', 'Wikispecies (taksonomi)'), ('mediawiki', 'MediaWiki (piranti lunak)'),
-                 ('wikidata', 'Wikidata (basis data)'),
-                 ('wikimedia_commons', 'Wikimedia Commons (gudang berkas: foto, video, musik)'),
-                 ('wikivoyage', 'Wikivoyage (panduan wisata)')])
+        choices=projects)
     criticism_suggestion = TextAreaField('Kritik dan saran*', validators=[DataRequired()])
-    want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya',
-                             validators=[DataRequired()])
+    want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya')
     submit = SubmitField("Kirim")

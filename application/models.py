@@ -30,6 +30,27 @@ class Training(db.Document):
 class Enrollment(db.Document):
     user_id = db.IntField()
     training_id = db.IntField()
+    evaluation_id = db.IntField()
     test_answer = db.StringField()
-    criticism = db.StringField()
-    suggestions = db.StringField()
+
+
+class Evaluation(db.Document):
+    evaluation_id = db.IntField(unique=True)
+    opinion = db.StringField()
+    is_trainer_good = db.BooleanField()
+    criticism_suggestion = db.StringField()
+    want_more = db.BooleanField()
+
+
+class WikimediaProject(db.Document):
+    wikimedia_project_id = db.IntField(unique=True)
+    name = db.StringField()
+    description = db.StringField()
+
+
+class InterestedProject(db.Document):
+    evaluation_id = db.IntField()
+    wikimedia_project_id = db.IntField()
+
+
+
