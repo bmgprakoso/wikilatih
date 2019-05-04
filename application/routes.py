@@ -20,6 +20,10 @@ def index():
     context = get_context()
     t = Training.objects.all()
     context['trainings'] = t
+
+    if context['is_admin']:
+        return render_template('dashboard.html', context=context)
+
     return render_template('index.html', context=context)
 
 
@@ -117,6 +121,9 @@ def training_detail(training_id):
 
     training = Training.objects.get(training_id=training_id)
     context['training'] = training
+
+    if context['is_admin']:
+        return render_template('admin-training-detail.html', context=context)
 
     try:
         enrollment = Enrollment.objects.get(user_id=context['user_id'], training_id=training_id)

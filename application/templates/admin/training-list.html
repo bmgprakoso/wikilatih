@@ -31,7 +31,12 @@
                 {% for training in trainings %}
                     <tr>
                         <th scope="row">{{ training.training_id }}</th>
-                        <td>{{ training.title }}</td>
+                        <td>
+                            <a class="btn btn-default"
+                               href="{{ url_for('training_detail', training_id=training.training_id) }}">
+                                {{ training.title }}
+                            </a>
+                        </td>
                         <td>{{ training.description }}</td>
                         <td>{{ training.location }}</td>
                         <td>{{ training.datetime }}</td>
@@ -42,10 +47,6 @@
                             </a>
                         </td>
                         <td>
-{#                            <button type="button" class="btn btn-default" data-toggle="modal"#}
-{#                                    data-target="#delModal">#}
-{#                                <i class="fa fa-trash" style="color: #d9534f;"></i>#}
-{#                            </button>#}
                             <a class="btn btn-default"
                                href="{{ url_for('admin_training_delete', training_id=training.training_id) }}">
                                 <i class="fa fa-trash" style="color: #d9534f;"></i>
@@ -57,18 +58,4 @@
             </table>
         </div>
     </div>
-
-    {#    <div class="modal fade" id="delModal" tabindex="-1" role="dialog">#}
-    {#        <div class="modal-dialog" role="document">#}
-    {#            <div class="modal-content">#}
-    {#                <div class="modal-body">#}
-    {#                    <p>Apakah kamu yakin ingin menghapus pelatihan?</p>#}
-    {#                </div>#}
-    {#                <div class="modal-footer">#}
-    {#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>#}
-    {#                    <a class="btn btn-success" href="{{ url_for('admin_training_delete', training_id=training.training_id) }}">Ya</a>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
 {% endblock %}
