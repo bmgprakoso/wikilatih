@@ -81,9 +81,7 @@ class EvaluationForm(FlaskForm):
                                  choices=[('ya', 'Ya'), ('tidak', 'Tidak')],
                                  validators=[DataRequired()])
     interested_wikimedia_project = MultiCheckboxField(
-        'Selain Wikipedia, proyek Wikimedia mana saja yang tertarik untuk Anda ikuti?*',
-        validators=[DataRequired()],
-        choices=projects)
+        'Selain Wikipedia, proyek Wikimedia mana saja yang tertarik untuk Anda ikuti?', choices=projects)
     criticism_suggestion = TextAreaField('Kritik dan saran*', validators=[DataRequired()])
     want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya')
     submit = SubmitField("Kirim")
