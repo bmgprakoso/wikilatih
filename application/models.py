@@ -29,7 +29,7 @@ class Training(db.Document):
 
 class Enrollment(db.Document):
     user_id = db.IntField()
-    course_id = db.IntField()
+    training_id = db.IntField()
     test_answer = db.StringField()
     criticism = db.StringField()
     suggestions = db.StringField()

@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         {% set navigation_bar = [
                 (url_for('index'), 'index', 'Beranda', True),
-                (url_for('account'), 'account', 'Pelatihan Saya', context['logged_in'] and not context['is_admin']),
+                (url_for('account'), 'account', 'Pelatihan Saya', context['user_id'] and not context['is_admin']),
                 (url_for('admin_training_list'), 'admin_training_list', 'Pelatihan', context['is_admin'])
         ] -%}
 
@@ -32,7 +32,7 @@
             {% endfor %}
         </ul>
 
-        {% if context['logged_in'] %}
+        {% if context['user_id'] %}
             <form action="{{ url_for('logout') }}">
                 <button class="btn btn-outline-secondary my-2 my-sm-0">{{ context['logged_name'] }}</button>
             </form>

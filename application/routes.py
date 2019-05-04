@@ -1,13 +1,13 @@
 from application import app
-from application.models import User, Training
-from flask import render_template, redirect, flash, session
+from application.models import User, Training, Enrollment
+from flask import render_template, redirect, flash, session, url_for
 from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm, TrainingForm
 import datetime
 
 
 def get_context():
     context = dict()
-    context['logged_in'] = session.get('user_id', None)
+    context['user_id'] = session.get('user_id', None)
     context['logged_name'] = session.get('name', '')
     context['is_admin'] = session.get('is_admin', False)
 
@@ -25,7 +25,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     context = get_context()
-    if context['logged_in']:
+    if context['user_id']:
         return redirect('/')
 
     form = LoginForm()
@@ -57,7 +57,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     context = get_context()
-    if context['logged_in']:
+    if context['user_id']:
         return redirect('/')
 
     form = RegisterForm()
@@ -85,7 +85,7 @@ def register():
 @app.route('/account')
 def account():
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     return render_template('account.html', context=context)
@@ -94,16 +94,42 @@ def account():
 @app.route('/trainings/<training_id>')
 def training_detail(training_id):
     context = get_context()
+
     training = Training.objects.get(training_id=training_id)
     context['training'] = training
 
+    try:
+        enrollment = Enrollment.objects.get(user_id=context['user_id'], training_id=training_id)
+        context['enrollment'] = enrollment
+    except:
+        context['enrollment'] = None
+
+    print(context)
     return render_template('training-detail.html', context=context)
+
+
+@app.route('/trainings/<training_id>/enroll')
+def training_enrollment(training_id):
+    context = get_context()
+    if not context['user_id']:
+        return redirect(url_for('login'))
+
+    training = Training.objects.get(training_id=training_id)
+
+    if training:
+        if Enrollment.objects(user_id=context['user_id'], training_id=training_id):
+            flash(f"Ups! Kamu telah terdaftar di pelatihan {training.title}!", "danger")
+        else:
+            Enrollment(user_id=session.get('user_id'), training_id=training_id).save()
+            flash(f"Kamu berhasil terdaftar di pelatihan {training.title}!", "success")
+
+    return redirect(url_for('training_detail', training_id=training_id))
 
 
 @app.route('/trainings/<training_id>/test', methods=['GET', 'POST'])
 def test(training_id):
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     t = Training.objects.all()
@@ -119,7 +145,7 @@ def test(training_id):
 @app.route('/trainings/<training_id>/evaluation', methods=['GET', 'POST'])
 def evaluation(training_id):
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     t = Training.objects.all()
@@ -135,7 +161,7 @@ def evaluation(training_id):
 @app.route('/admin/trainings')
 def admin_training_list():
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     t = Training.objects.all()
@@ -145,7 +171,7 @@ def admin_training_list():
 @app.route('/admin/trainings/new', methods=['GET', 'POST'])
 def admin_training_new():
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     form = TrainingForm()
@@ -173,7 +199,7 @@ def admin_training_new():
 @app.route('/admin/trainings/<training_id>/edit', methods=['GET', 'POST'])
 def admin_training_edit(training_id):
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     t = Training.objects.get(training_id=training_id)
@@ -197,7 +223,7 @@ def admin_training_edit(training_id):
 @app.route('/admin/trainings/<training_id>/delete', methods=['GET', 'POST'])
 def admin_training_delete(training_id):
     context = get_context()
-    if not context['logged_in']:
+    if not context['user_id']:
         return redirect('/')
 
     t = Training.objects.get(training_id=training_id)
