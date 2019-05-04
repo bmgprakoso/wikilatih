@@ -8,8 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- CSS  -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ url_for('bower.static', filename='bootstrap/dist/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('bower.static', filename='font-awesome/css/all.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     {% endblock %}
 </head>
@@ -31,9 +31,9 @@
 
     {% block content %}{% endblock %}
 </div>
-<script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+<script src="{{ url_for('bower.static', filename='jquery/dist/jquery.js') }}"></script>
 <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/font-awesome.js') }}"></script>
+<script src="{{ url_for('bower.static', filename='bootstrap/dist/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('bower.static', filename='font-awesome/js/all.js') }}"></script>
 </body>
 </html>

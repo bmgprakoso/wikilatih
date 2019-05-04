@@ -5,6 +5,7 @@ from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from wtforms.widgets import ListWidget, CheckboxInput
 from application.models import User
+from city import city
 
 
 class LoginForm(FlaskForm):
@@ -25,7 +26,8 @@ class RegisterForm(FlaskForm):
                       choices=[('', 'Pekerjaan'), ('Pegawai Negeri Sipil', 'Pegawai Negeri Sipil'),
                                ('Pegawai Swasta', 'Pegawai Swasta'),
                                ('Wirausaha', 'Wirausaha'), ('Pelajar', 'Pelajar'), ('Lain-lain', 'Lain-lain')])
-    city = StringField('Kota', validators=[DataRequired()])
+    city = SelectField('Kota', validators=[DataRequired()],
+                       choices=city)
     submit = SubmitField("Daftar")
 
     def validate_email(self, email):
@@ -83,6 +85,6 @@ class EvaluationForm(FlaskForm):
                  ('wikimedia_commons', 'Wikimedia Commons (gudang berkas: foto, video, musik)'),
                  ('wikivoyage', 'Wikivoyage (panduan wisata)')])
     criticism_suggestion = TextAreaField('Kritik dan saran*', validators=[DataRequired()])
-    want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya bila ada',
+    want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya',
                              validators=[DataRequired()])
     submit = SubmitField("Kirim")
