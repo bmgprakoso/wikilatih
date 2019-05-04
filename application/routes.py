@@ -3,6 +3,7 @@ from application.models import User, Training, Enrollment, Evaluation, Intereste
 from flask import render_template, redirect, flash, session, url_for
 from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm, TrainingForm
 import datetime
+import random
 
 
 def get_context():
@@ -150,14 +151,28 @@ def test(training_id):
     if not context['user_id']:
         return redirect('/')
 
-    t = Training.objects.all()
+    training = Training.objects.get(training_id=training_id)
+    if not training:
+        return redirect('/')
+    context['training'] = training
+
+    try:
+        enrollment = Enrollment.objects.get(user_id=context['user_id'], training_id=training_id)
+    except:
+        flash(f"Ups! Kamu belum terdaftar di pelatihan {training.title}!", "danger")
+        return redirect(url_for('training_detail', training_id=training_id))
 
     form = TestForm()
-    if form.validate_on_submit():
-        flash('Jawaban berhasil disimpan', 'success')
-        return redirect('/')
+    context['form'] = form
 
-    return render_template('test.html', training=t, form=form, context=context)
+    if form.validate_on_submit():
+        enrollment.test_score = random.randrange(75, 100)
+        enrollment.save()
+
+        flash('Jawaban berhasil disimpan', 'success')
+        return redirect(url_for('training_detail', training_id=training_id))
+
+    return render_template('test.html', context=context)
 
 
 @app.route('/trainings/<training_id>/evaluation', methods=['GET', 'POST'])

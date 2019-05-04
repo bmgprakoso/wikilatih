@@ -31,7 +31,7 @@ class Enrollment(db.Document):
     user_id = db.IntField()
     training_id = db.IntField()
     evaluation_id = db.IntField()
-    test_answer = db.StringField()
+    test_score = db.IntField()
 
 
 class Evaluation(db.Document):

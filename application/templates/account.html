@@ -59,18 +59,6 @@
                                             <p class="card-text">{{ training.description }}</p>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <a class="btn btn-primary"
-                                               href="{{ url_for('test', training_id=training.training_id) }}">
-                                                <i class="fa fa-book-reader"></i> Uji Kemampuan
-                                            </a>
-                                            <a class="btn btn-secondary"
-                                               href="{{ url_for('evaluation', training_id=training.training_id) }}">
-                                                <i class="fa fa-comment-dots"></i> Beri Ulasan
-                                            </a>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -100,7 +88,7 @@
                                             <i class="fa fa-book-reader"></i> Uji Kemampuan
                                         </a>
                                         <a class="btn btn-secondary" href="{{ url_for('evaluation', training_id=1) }}">
-                                            <i class="fa fa-comment-dots"></i> Beri Ulasan
+                                            <i class="fa fa-comment-dots"></i> Isi Form Evaluasi
                                         </a>
                                     </div>
                                 </div>
@@ -109,7 +97,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 {% endblock %}
