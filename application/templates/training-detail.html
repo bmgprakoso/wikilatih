@@ -84,7 +84,7 @@
                             </p>
                             {% if context['enrollment']['test_score'] %}
                                 <p class="card-text">Nilai ujian Anda</p>
-                                <h3>{{ context['enrollment']['test_score'] }}</h3>
+                                <h3 class="text-success">{{ context['enrollment']['test_score'] }}</h3>
                             {% else %}
                                 <a class="btn btn-primary"
                                    href="{{ url_for('test', training_id=training.training_id) }}">

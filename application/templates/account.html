@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% set active_page = "account" %}
+{% set done = context['enroll_list'] %}
 {% block title %}Account{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="row mt-4">
+    <div class="container mt-4">
+        <h1>Pelatihan Saya</h1>
+        <div class="row">
             <div class="col-lg-4">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-12">
@@ -24,78 +26,32 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab"
-                           aria-controls="active" aria-selected="true">Aktif</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="done-tab" data-toggle="tab" href="#done" role="tab"
-                           aria-controls="done" aria-selected="false">Selesai</a>
-                    </li>
-                </ul>
-                <div class="tab-content pt-4" id="myTabContent">
-                    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                        {% for e in context['enroll_list'] %}
-                            {% set image_url = 'https://picsum.photos/900/200?image=' + range(1, 100) | random | string %}
-                            {% set training = e.training_detail[0] %}
-                            {% set day_of_month = training.datetime.strftime('%d') %}
-                            {% set month_short = training.datetime.strftime('%b') %}
-                            {% set time = training.datetime.strftime('%X') %}
-                            <div class="card">
-                                <img class="card-img-top img-fluid" src="{{ image_url }}" alt="">
-                                <div class="card-body">
-                                    <div class="row mb-4">
-                                        <div class="col-2 text-center">
-                                            <h1 class=""><span class="badge badge-secondary">{{ day_of_month }}</span>
-                                            </h1>
-                                            <h4>{{ month_short.upper() }}</h4>
-                                        </div>
-                                        <div class="col-10">
-                                            <a href="{{ url_for('training_detail', training_id=training.training_id) }}">
-                                                <h5 class="card-title">{{ training.title }}</h5>
-                                            </a>
-                                            <h6 class="card-subtitle mb-2 text-muted">{{ training.datetime.strftime('%c') }}</h6>
-                                            <p class="card-text">{{ training.description }}</p>
-                                        </div>
-                                    </div>
+                {% for e in context['enroll_list'] %}
+                    {% set image_url = 'https://picsum.photos/900/200?image=' + range(1, 100) | random | string %}
+                    {% set training = e.training_detail[0] %}
+                    {% set day_of_month = training.datetime.strftime('%d') %}
+                    {% set month_short = training.datetime.strftime('%b') %}
+                    {% set time = training.datetime.strftime('%X') %}
+                    <div class="card mb-4">
+                        <img class="card-img-top img-fluid" src="{{ image_url }}" alt="">
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-2 text-center">
+                                    <h3 class=""><span class="badge badge-secondary">{{ day_of_month }}</span>
+                                    </h3>
+                                    <h6>{{ month_short.upper() }}</h6>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
-                        <div class="card">
-                            <img class="card-img-top img-fluid" src="http://placehold.it/900x200" alt="">
-                            <div class="card-body">
-                                <div class="row mb-4">
-                                    <div class="col-2 text-center">
-                                        <h1 class=""><span class="badge badge-secondary">23</span></h1>
-                                        <h4>OCT</h4>
-                                    </div>
-                                    <div class="col-10">
-                                        <h4>Deskripsi</h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            Sapiente
-                                            dicta
-                                            fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint
-                                            aperiam sequi
-                                            pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a class="btn btn-primary" href="{{ url_for('test', training_id=1) }}">
-                                            <i class="fa fa-book-reader"></i> Uji Kemampuan
-                                        </a>
-                                        <a class="btn btn-secondary" href="{{ url_for('evaluation', training_id=1) }}">
-                                            <i class="fa fa-comment-dots"></i> Isi Form Evaluasi
-                                        </a>
-                                    </div>
+                                <div class="col-10">
+                                    <a href="{{ url_for('training_detail', training_id=training.training_id) }}">
+                                        <h5 class="card-title">{{ training.title }}</h5>
+                                    </a>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ training.datetime.strftime('%c') }}</h6>
+                                    <p class="card-text">{{ training.description }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
