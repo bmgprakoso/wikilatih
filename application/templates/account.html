@@ -10,7 +10,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="row mb-4">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <img class="mx-auto d-block rounded-circle" src="http://loremflickr.com/100/100/people">
                             </div>
                         </div>
@@ -29,19 +29,12 @@
                 {% for e in context['enroll_list'] %}
                     {% set image_url = 'https://picsum.photos/900/200?image=' + range(1, 100) | random | string %}
                     {% set training = e.training_detail[0] %}
-                    {% set day_of_month = training.datetime.strftime('%d') %}
-                    {% set month_short = training.datetime.strftime('%b') %}
                     {% set time = training.datetime.strftime('%X') %}
                     <div class="card mb-4">
                         <img class="card-img-top img-fluid" src="{{ image_url }}" alt="">
                         <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-2 text-center">
-                                    <h3 class=""><span class="badge badge-secondary">{{ day_of_month }}</span>
-                                    </h3>
-                                    <h6>{{ month_short.upper() }}</h6>
-                                </div>
-                                <div class="col-10">
+                            <div class="row mb-2">
+                                <div class="col-md-12">
                                     <a href="{{ url_for('training_detail', training_id=training.training_id) }}">
                                         <h5 class="card-title">{{ training.title }}</h5>
                                     </a>

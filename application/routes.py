@@ -47,7 +47,7 @@ def login():
             session['is_admin'] = user.is_admin
             return redirect('/')
         else:
-            flash('Mohon maaf, sedang ada gangguan sistem. Silakan kembali beberapa saat lagi', 'danger')
+            flash('Kata sandi salah atau akun belum terdaftar', 'danger')
     return render_template('login.html', context=context)
 
 
