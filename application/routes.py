@@ -43,7 +43,7 @@ def login():
 
         user = User.objects(email=email).first()
         if user and user.get_password(password):
-            flash(f'{user.name}, kamu berhasil masuk', 'success')
+            flash(f'{user.name}, kamu berhasil masuk.', 'success')
             session['user_id'] = user.user_id
             session['email'] = user.email
             session['name'] = user.name
@@ -57,6 +57,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    session.pop('email', None)
     session.pop('name', None)
     session.pop('is_admin', None)
     return redirect('/')
@@ -95,6 +96,8 @@ def account():
     context = get_context()
     if not context['user_id']:
         return redirect('/')
+
+    mail.send_qualification_certificate(context['email'])
 
     user = User.objects.get(user_id=context['user_id'])
     context['user'] = user
