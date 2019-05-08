@@ -97,8 +97,6 @@ def account():
     if not context['user_id']:
         return redirect('/')
 
-    mail.send_qualification_certificate(context['email'])
-
     user = User.objects.get(user_id=context['user_id'])
     context['user'] = user
 
