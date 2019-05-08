@@ -114,7 +114,7 @@ def account():
             }
         }
     ])
-    context['enroll_list'] = enroll_list
+    context['enroll_list'] = list(enroll_list)
 
     return render_template('account.html', context=context)
 
