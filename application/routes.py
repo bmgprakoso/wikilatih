@@ -176,6 +176,10 @@ def test(training_id):
         flash(f"Ups! Kamu belum terdaftar di pelatihan {training.title}!", "danger")
         return redirect(url_for('training_detail', training_id=training_id))
 
+    if enrollment.test_score:
+        flash(f"Ups! Kamu sudah pernah mengikuti uji kompetensi di {training.title}!", "danger")
+        return redirect(url_for('training_detail', training_id=training_id))
+
     form = TestForm()
     context['form'] = form
 
@@ -206,6 +210,10 @@ def evaluation(training_id):
         enrollment = Enrollment.objects.get(user_id=context['user_id'], training_id=training_id)
     except:
         flash(f"Ups! Kamu belum terdaftar di pelatihan {training.title}!", "danger")
+        return redirect(url_for('training_detail', training_id=training_id))
+
+    if enrollment.evaluation_id:
+        flash(f"Ups! Kamu sudah pernah mengisi form evaluasi di {training.title}!", "danger")
         return redirect(url_for('training_detail', training_id=training_id))
 
     form = EvaluationForm()
