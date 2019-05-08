@@ -2,6 +2,7 @@ from application import app
 from application.models import User, Training, Enrollment, Evaluation, InterestedProject
 from flask import render_template, redirect, flash, session, url_for
 from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm, TrainingForm
+from application.services import mail
 import datetime
 import random
 
@@ -9,6 +10,7 @@ import random
 def get_context():
     context = dict()
     context['user_id'] = session.get('user_id', None)
+    context['email'] = session.get('email', None)
     context['logged_name'] = session.get('name', '')
     context['is_admin'] = session.get('is_admin', False)
 
@@ -43,6 +45,7 @@ def login():
         if user and user.get_password(password):
             flash(f'{user.name}, kamu berhasil masuk', 'success')
             session['user_id'] = user.user_id
+            session['email'] = user.email
             session['name'] = user.name
             session['is_admin'] = user.is_admin
             return redirect('/')
@@ -176,6 +179,8 @@ def test(training_id):
         enrollment.test_score = random.randrange(75, 100)
         enrollment.save()
 
+        mail.send_qualification_certificate(context['email'])
+
         flash('Jawaban berhasil disimpan', 'success')
         return redirect(url_for('training_detail', training_id=training_id))
 
@@ -221,6 +226,8 @@ def evaluation(training_id):
 
         enrollment.evaluation_id = evaluation_id
         enrollment.save()
+
+        mail.send_attendance_certificate(context['email'])
 
         flash('Terima kasih atas ulasanmu', 'success')
         return redirect('/')
