@@ -44,7 +44,7 @@
                                     {{ field(class_="btn btn-success btn-block") }}
                                 </div>
                             </div>
-                        {% elif field.type == 'TextAreaField' %}
+                        {% elif field.type == 'TextAreaField' or field.type == 'StringField' %}
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>{{ field.label }}</label>

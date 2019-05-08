@@ -61,6 +61,7 @@ class TestForm(FlaskForm):
     question5 = RadioField('Question 5',
                            choices=[('A', 'Answer A'), ('B', 'Answer B'), ('C', 'Answer C'), ('D', 'Answer D')],
                            validators=[DataRequired()])
+    verification_code = StringField('Kode Verifikasi*', validators=[DataRequired(), Length(min=2, max=100)])
     submit = SubmitField('Kirim')
 
 
@@ -84,4 +85,5 @@ class EvaluationForm(FlaskForm):
         'Selain Wikipedia, proyek Wikimedia mana saja yang tertarik untuk Anda ikuti?', choices=projects)
     criticism_suggestion = TextAreaField('Kritik dan saran*', validators=[DataRequired()])
     want_more = BooleanField('Saya berminat untuk mengikuti pelatihan selanjutnya')
+    verification_code = StringField('Kode Verifikasi*', validators=[DataRequired(), Length(min=2, max=100)])
     submit = SubmitField("Kirim")

@@ -21,6 +21,15 @@
                                             {{ subfield.label(class_='form-check-label') }}
                                         </div>
                                     {% endfor %}
+                                    {% for error in field.errors %}
+                                        <span class="text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                {% elif field.type == 'StringField' %}
+                                    <label>{{ field.label }}</label>
+                                    {{ field(class_='form-control') }}
+                                    {% for error in field.errors %}
+                                        <span class="text-danger">{{ error }}</span>
+                                    {% endfor %}
                                 {% elif field.type == 'SubmitField' %}
                                     {{ field(class_="btn btn-success btn-block") }}
                                 {% endif %}
