@@ -151,6 +151,9 @@ def training_enrollment(training_id):
             flash(f"Ups! Kamu telah terdaftar di pelatihan {training.title}!", "danger")
         else:
             Enrollment(user_id=session.get('user_id'), training_id=training_id).save()
+
+            mail.send_enrollment_info(context['email'], training.title)
+
             flash(f"Kamu berhasil terdaftar di pelatihan {training.title}!", "success")
 
     return redirect(url_for('training_detail', training_id=training_id))

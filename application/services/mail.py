@@ -1,5 +1,21 @@
 from application import app, mail
 from flask_mail import Message
+from flask import render_template
+
+
+def send_enrollment_info(email, training_name):
+    try:
+        msg = Message(f'Pendaftaran Pelatihan {training_name}', sender='wikilatih.app@gmail.com',
+                      recipients=[email])
+        msg.body = f'Anda sudah terdaftar di pelatihan {training_name} melalui website WikiLatih.' \
+                   'Silakan gunakan kode QR dibawah untuk mengisi presensi di acara nanti. Terima kasih.'
+
+        msg.html = render_template('enrollment-mail.html', training_name=training_name)
+
+        mail.send(msg)
+        return True
+    except:
+        return False
 
 
 def send_attendance_certificate(email):
