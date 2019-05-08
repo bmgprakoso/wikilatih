@@ -20,9 +20,9 @@ class User(db.Document):
 
 
 class Training(db.Document):
-    training_id = db.IntField(unique=True)
+    training_id = db.SequenceField(unique=True)
     title = db.StringField(max_length=100)
-    description = db.StringField(max_length=255)
+    description = db.StringField()
     location = db.StringField(max_length=255)
     datetime = db.DateTimeField()
 

@@ -38,7 +38,7 @@ class RegisterForm(FlaskForm):
 
 class TrainingForm(FlaskForm):
     title = StringField('Nama Pelatihan', validators=[DataRequired(), Length(min=2, max=100)])
-    description = TextAreaField('Deskripsi', validators=[DataRequired(), Length(min=2, max=255)])
+    description = TextAreaField('Deskripsi', validators=[DataRequired()])
     location = StringField('Lokasi', validators=[DataRequired(), Length(min=2, max=255)])
     date = DateField('Tanggal Pelatihan', validators=[DataRequired()])
     time = TimeField('Waktu Pelatihan', validators=[DataRequired()])

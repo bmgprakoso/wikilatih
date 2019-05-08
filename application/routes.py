@@ -257,9 +257,6 @@ def admin_training_new():
 
     form = TrainingForm()
     if form.validate_on_submit():
-        training_id = Training.objects.count()
-        training_id += 1
-
         title = form.title.data
         description = form.description.data
         location = form.location.data
@@ -268,7 +265,7 @@ def admin_training_new():
 
         date_time = datetime.datetime.combine(date, time)
 
-        training = Training(training_id=training_id, title=title, description=description, location=location,
+        training = Training(title=title, description=description, location=location,
                             datetime=date_time)
         training.save()
         flash('Pelatihan berhasil terdaftar', 'success')
