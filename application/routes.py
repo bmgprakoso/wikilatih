@@ -1,6 +1,6 @@
 from application import app
 from application.models import User, Training, Enrollment, Evaluation, InterestedProject
-from flask import render_template, redirect, flash, session, url_for
+from flask import render_template, redirect, flash, session, url_for, Response
 from application.forms import LoginForm, RegisterForm, TestForm, EvaluationForm, TrainingForm
 from application.services import mail
 import datetime
@@ -311,3 +311,10 @@ def admin_training_delete(training_id):
     t.delete()
 
     return redirect('/admin/trainings')
+
+
+@app.route("/download")
+def download():
+    content = 'ini adalah contoh hasil unduhan'
+    return Response(content, mimetype="text/plain",
+                    headers={"Content-disposition": "attachment; filename=download.txt"})
