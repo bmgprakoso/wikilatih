@@ -315,6 +315,7 @@ def admin_training_delete(training_id):
     t = Training.objects.get(training_id=training_id)
     t.delete()
 
+    flash('Pelatihan berhasil dihapus', 'success')
     return redirect('/admin/trainings')
 
 
