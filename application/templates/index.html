@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             {% for training in context['trainings'] %}
-                {% set image_url = 'https://picsum.photos/500/225?image=' + range(1, 100) | random | string %}
+                {% set image_url = 'https://picsum.photos/500/225?image=' + range(1, 30) | random | string %}
                 {% set day_of_month = training.datetime.strftime('%d') %}
                 {% set month_short = training.datetime.strftime('%b') %}
                 {% set time = training.datetime.strftime('%X') %}
